@@ -1,0 +1,49 @@
+#!/usr/bin/env_node
+const axios = require('axios');
+const http = require('http');
+
+const config = require('../config')[process.env.NODE_ENV || 'development'];
+
+const log = config.log();
+const service = require('../server/service')(config);
+
+const server = http.createServer(service);
+
+// Important - a service should not have a fixed port but should randomly choose one
+server.listen(0);
+
+server.on('listening',()=>{
+  const registerService = () => axios.put(`http://localhost:3000/register/${config.name}/${config.version}/${server.address().port}`);
+  const unregisterService = () => axios.delete(`http://localhost:3000/register/${config.name}/${config.version}/${server.address().port}`);
+
+  registerService();
+
+  const interval = setInterval(registerService, 20000);
+  const cleanup = async() => {
+    clearInterval(interval);
+    await unregisterService();
+  };
+
+  process.on('uncaughtException', async()=> {
+    await cleanup();
+    process.exit(0);
+  });
+
+  process.on('SIGINT',async()=>{
+    await cleanup();
+    process.exit(0);
+  });
+
+  process.on('SIGTERM', async()=>{
+    await cleanup();
+    process.exit(0);
+  });
+
+  // setTimeout(()=>{
+  //   throw new Error('Something Went wrong.');
+  // },10000);
+
+  log.info(
+    `Hi there! I'm listening on port ${server.address().port} in Development mode.`
+  );
+})

@@ -1,0 +1,17 @@
+{
+  "name": "service-registry",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon ./bin/run"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bunyan": "^1.8.14",
+    "express": "^4.17.1",
+    "semver": "^7.3.4"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "name": "project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "services": "npm start --prefix speakers-service",
+    "register": "npm start --prefix service-registry & npm run services",
+    "app": "npm start --prefix conference-app",
+    "start":"npm run app & npm run register"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

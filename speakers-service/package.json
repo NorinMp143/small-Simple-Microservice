@@ -1,0 +1,20 @@
+{
+  "name": "speakers-service",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "bin": {
+    "speakers-service": "run.js"
+  },
+  "dependencies": {
+    "axios": "^0.21.1",
+    "bunyan": "^1.8.14",
+    "express": "^4.17.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "nodemon ./bin/run"
+  },
+  "author": "",
+  "license": "ISC"
+}
